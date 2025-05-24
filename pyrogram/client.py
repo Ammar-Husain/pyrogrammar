@@ -1018,7 +1018,8 @@ class Client(Methods):
             except pyrogram.StopTransmission:
                 raise
             except Exception as e:
-                log.exception(e)
+                # log.exception(e)
+                raise e
             finally:
                 await session.stop()
 
