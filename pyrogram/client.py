@@ -41,6 +41,7 @@ from pyrogram.errors import (
     BadRequest,
     CDNFileHashMismatch,
     ChannelPrivate,
+    FileReferenceExpired,
     FloodWait,
     SessionPasswordNeeded,
     VolumeLocNotFound,
@@ -1127,6 +1128,8 @@ class Client(Methods):
             except pyrogram.StopTransmission:
                 raise
             except FloodWait as e:
+                raise e
+            except FileReferenceExpired as e:
                 raise e
             except Exception as e:
                 log.exception(e)
