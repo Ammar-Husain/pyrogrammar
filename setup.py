@@ -27,7 +27,7 @@ from compiler.errors import compiler as errors_compiler
 with open("requirements.txt", encoding="utf-8") as r:
     requires = [i.strip() for i in r]
 
-with open("pyrogram/__init__.py", encoding="utf-8") as f:
+with open("pyrogrammar/__init__.py", encoding="utf-8") as f:
     version = re.findall(r"__version__ = \"(.+)\"", f.read())[0]
 
 with open("README.md", encoding="utf-8") as f:
@@ -38,13 +38,13 @@ if len(argv) > 1 and argv[1] in ["bdist_wheel", "install", "develop"]:
     errors_compiler.start()
 
 setup(
-    name="Pyrogram",
+    name="Pyrogrammar",
     version=version,
     description="Elegant, modern and asynchronous Telegram MTProto API framework in Python for users and bots",
     long_description=readme,
     long_description_content_type="text/markdown",
-    url="https://github.com/pyrogram",
-    download_url="https://github.com/pyrogram/pyrogram/releases/latest",
+    url="https://github.com/Ammar-Husain/pyrogrammar",
+    download_url="https://github.com/Ammar-husain/pyrogrammar",
     author="Dan",
     author_email="dan@pyrogram.org",
     license="LGPLv3",
@@ -73,14 +73,14 @@ setup(
     ],
     keywords="telegram chat messenger mtproto api client library python",
     project_urls={
-        "Tracker": "https://github.com/pyrogram/pyrogram/issues",
+        "Tracker": "https://github.com/Ammar-Husain/pyrogrammar/issues",
         "Community": "https://t.me/pyrogram",
         "Source": "https://github.com/pyrogram/pyrogram",
         "Documentation": "https://docs.pyrogram.org",
     },
     python_requires="~=3.7",
     package_data={
-        "pyrogram": ["py.typed"],
+        "pyrogrammar": ["py.typed"],
     },
     packages=find_packages(exclude=["compiler*", "tests*"]),
     zip_safe=False,
