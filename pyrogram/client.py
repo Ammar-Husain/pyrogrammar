@@ -895,7 +895,7 @@ class Client(Methods):
             if isinstance(e, asyncio.CancelledError):
                 raise e
 
-            if isinstance(e, Floodwait):
+            if isinstance(e, FloodWait):
                 raise e
 
             return None
