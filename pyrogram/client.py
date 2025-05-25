@@ -898,6 +898,8 @@ class Client(Methods):
 
             if isinstance(e, FloodWait):
                 raise e
+            if isinstance(e, FileReferenceExpired):
+                raise e
 
             return None
         else:
