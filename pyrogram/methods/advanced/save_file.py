@@ -108,11 +108,11 @@ class SaveFile:
                     try:
                         await session.invoke(data)
                     except Exception as e:
-
                         if isinstance(e, FloodWait):
                             raise e
-
-                        log.exception(e)
+                        else:
+                            # raise e
+                            log.exception(e)
 
             part_size = 512 * 1024
 
