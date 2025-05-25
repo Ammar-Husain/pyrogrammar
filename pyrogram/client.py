@@ -1130,12 +1130,13 @@ class Client(Methods):
             except pyrogram.StopTransmission:
                 raise
             except FloodWait as e:
+                print("The flood wait exception inside client.getfile was called")
                 raise e
             except FileReferenceExpired as e:
                 raise e
             except Exception as e:
-                log.exception(e)
-                # raise e
+                # log.exception(e)
+                raise e
             finally:
                 await session.stop()
 
