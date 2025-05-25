@@ -111,6 +111,7 @@ class SaveFile:
                         raise
                     except Exception as e:
                         log.exception(e)
+                        raise
 
             part_size = 512 * 1024
 
@@ -213,7 +214,7 @@ class SaveFile:
                 raise e
 
             except Exception as e:
-                # log.exception(e)
+                log.exception(e)
                 raise e
             else:
                 if is_big:

@@ -1135,7 +1135,7 @@ class Client(Methods):
             except FileReferenceExpired as e:
                 raise e
             except Exception as e:
-                # log.exception(e)
+                log.exception(e)
                 raise e
             finally:
                 await session.stop()
