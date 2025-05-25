@@ -206,14 +206,15 @@ class SaveFile:
                             await func()
                         else:
                             await self.loop.run_in_executor(self.executor, func)
-            except StopTransmission:
-                raise
+            except StopTransmission as e:
+                raise e
 
-            except FloodWait:
-                raise
+            except FloodWait as e:
+                raise e
 
             except Exception as e:
-                log.exception(e)
+                # log.exception(e)
+                raise e
             else:
                 if is_big:
                     return raw.types.InputFileBig(
