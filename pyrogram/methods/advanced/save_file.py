@@ -107,12 +107,10 @@ class SaveFile:
 
                     try:
                         await session.invoke(data)
+                    except FloodWait:
+                        raise
                     except Exception as e:
-                        if isinstance(e, FloodWait):
-                            raise e
-                        else:
-                            # raise e
-                            log.exception(e)
+                        log.exception(e)
 
             part_size = 512 * 1024
 
@@ -210,6 +208,10 @@ class SaveFile:
                             await self.loop.run_in_executor(self.executor, func)
             except StopTransmission:
                 raise
+
+            except FloodWait:
+                raise
+
             except Exception as e:
                 log.exception(e)
             else:
