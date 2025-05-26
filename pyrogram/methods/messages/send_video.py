@@ -257,13 +257,8 @@ class SendVideo:
                     )
                 except FilePartMissing as e:
                     await self.save_file(video, file_id=file.id, file_part=e.value)
-
                 except FloodWait:
-                    print(
-                        "xxx\n\n\nthe flood wait error reaches the send video fucntion\n\n\n"
-                    )
                     raise
-
                 else:
                     for i in r.updates:
                         if isinstance(
@@ -283,8 +278,7 @@ class SendVideo:
                                     i, raw.types.UpdateNewScheduledMessage
                                 ),
                             )
+        except FloodWait:
+            raise
         except StopTransmission:
             return None
-        except FloodWait:
-            print("xxx\nthe flood wait exception reaches send_video function")
-            raise

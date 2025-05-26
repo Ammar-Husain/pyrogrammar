@@ -106,17 +106,11 @@ class SaveFile:
                         return
 
                     try:
-                        await session.invoke(data, sleep_threshold=0)
-                        # await session.invoke(data, sleep_threshold=self.sleep_threshold)
-                    except FloodWait as e:
-                        print(
-                            "xxx\n\n\nthe flood wait exception reaches save_file funcion\n\n\n"
-                        )
-                        log.exception(e)
-                        raise e
+                        await session.invoke(data, sleep_threshold=self.sleep_threshold)
+                    except FloodWait:
+                        raise
                     except Exception as e:
                         log.exception(e)
-                        raise
 
             part_size = 512 * 1024
 
@@ -212,18 +206,12 @@ class SaveFile:
                             await func()
                         else:
                             await self.loop.run_in_executor(self.executor, func)
-            except StopTransmission as e:
-                raise e
-
-            except FloodWait as e:
-                print(
-                    "xxx\n\n\n the flood wait exception reaches the save_file function"
-                )
-                raise e
-
+            except StopTransmission:
+                raise
+            except FloodWait:
+                raise
             except Exception as e:
                 log.exception(e)
-                raise e
             else:
                 if is_big:
                     return raw.types.InputFileBig(

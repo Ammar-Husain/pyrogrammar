@@ -53,7 +53,7 @@ class Result:
 class Session:
     START_TIMEOUT = 2
     WAIT_TIMEOUT = 15
-    SLEEP_THRESHOLD = 10
+    SLEEP_THRESHOLD = 0
     MAX_RETRIES = 10
     ACKS_THRESHOLD = 10
     PING_INTERVAL = 5
@@ -188,7 +188,6 @@ class Session:
                 await self.client.disconnect_handler(self.client)
             except Exception as e:
                 log.exception(e)
-                raise
 
         log.info("Session stopped")
 
@@ -430,12 +429,6 @@ class Session:
                 amount = e.value
 
                 if amount > sleep_threshold >= 0:
-                    log.warning(
-                        "[%s] %s tell you to wait for %s",
-                        self.client.name,
-                        query_name,
-                        amount,
-                    )
                     raise
 
                 log.warning(
@@ -459,4 +452,4 @@ class Session:
 
                 await asyncio.sleep(0.5)
 
-                return await self.invoke(query, retries - 1, timeout, sleep_threshold)
+                return await self.invoke(query, retries - 1, timeout)

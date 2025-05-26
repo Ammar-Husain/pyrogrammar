@@ -41,7 +41,6 @@ from pyrogram.errors import (
     BadRequest,
     CDNFileHashMismatch,
     ChannelPrivate,
-    FileReferenceExpired,
     FloodWait,
     SessionPasswordNeeded,
     VolumeLocNotFound,
@@ -888,6 +887,8 @@ class Client(Methods):
                 file_id, file_size, 0, 0, progress, progress_args
             ):
                 file.write(chunk)
+        except FloodWait:
+            raise
         except BaseException as e:
             if not in_memory:
                 file.close()
@@ -896,16 +897,7 @@ class Client(Methods):
             if isinstance(e, asyncio.CancelledError):
                 raise e
 
-            if isinstance(e, FloodWait):
-                raise e
-            if isinstance(e, FileReferenceExpired):
-                raise e
-
             return None
-
-        except FloodWait:
-            print("xxx\n\n\nthe flood wait exception reaches handle_download\n\n\n")
-            raise
         else:
             if in_memory:
                 file.name = file_name
@@ -1037,7 +1029,7 @@ class Client(Methods):
                             raw.functions.upload.GetFile(
                                 location=location, offset=offset_bytes, limit=chunk_size
                             ),
-                            sleep_threshold=self.sleep_threshold,
+                            sleep_threshold=30,
                         )
 
                 elif isinstance(r, raw.types.upload.FileCdnRedirect):
@@ -1135,16 +1127,10 @@ class Client(Methods):
                         await cdn_session.stop()
             except pyrogram.StopTransmission:
                 raise
-            except FloodWait as e:
-                print(
-                    "xxx\n\n\nThe flood wait exception reahes get_file function\n\n\n"
-                )
-                raise e
-            except FileReferenceExpired as e:
-                raise e
+            except FloodWait:
+                raise
             except Exception as e:
                 log.exception(e)
-                raise e
             finally:
                 await session.stop()
 
