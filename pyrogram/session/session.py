@@ -53,7 +53,7 @@ class Result:
 class Session:
     START_TIMEOUT = 2
     WAIT_TIMEOUT = 15
-    SLEEP_THRESHOLD = 0
+    SLEEP_THRESHOLD = 10
     MAX_RETRIES = 10
     ACKS_THRESHOLD = 10
     PING_INTERVAL = 5
@@ -453,4 +453,4 @@ class Session:
 
                 await asyncio.sleep(0.5)
 
-                return await self.invoke(query, retries - 1, timeout)
+                return await self.invoke(query, retries - 1, timeout, sleep_threshold)

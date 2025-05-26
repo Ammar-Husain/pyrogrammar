@@ -258,6 +258,9 @@ class SendVideo:
                     await self.save_file(video, file_id=file.id, file_part=e.value)
 
                 except FloodWait:
+                    print(
+                        "xxx\n\n\nthe flood wait error reaches the send video fucntion\n\n\n"
+                    )
                     raise
 
                 else:

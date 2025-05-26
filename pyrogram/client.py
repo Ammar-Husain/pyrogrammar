@@ -902,6 +902,10 @@ class Client(Methods):
                 raise e
 
             return None
+
+        except FloodWait:
+            print("xxx\n\n\nthe flood wait exception reaches handle_download\n\n\n")
+            raise
         else:
             if in_memory:
                 file.name = file_name
@@ -982,13 +986,15 @@ class Client(Methods):
 
                 if dc_id != await self.storage.dc_id():
                     exported_auth = await self.invoke(
-                        raw.functions.auth.ExportAuthorization(dc_id=dc_id)
+                        raw.functions.auth.ExportAuthorization(dc_id=dc_id),
+                        sleep_threshold=self.sleep_threshold,
                     )
 
                     await session.invoke(
                         raw.functions.auth.ImportAuthorization(
                             id=exported_auth.id, bytes=exported_auth.bytes
-                        )
+                        ),
+                        sleep_threshold=self.sleep_threshold,
                     )
 
                 r = await session.invoke(
@@ -1130,7 +1136,9 @@ class Client(Methods):
             except pyrogram.StopTransmission:
                 raise
             except FloodWait as e:
-                print("The flood wait exception inside client.getfile was called")
+                print(
+                    "xxx\n\n\nThe flood wait exception reahes get_file function\n\n\n"
+                )
                 raise e
             except FileReferenceExpired as e:
                 raise e
