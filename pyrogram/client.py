@@ -995,7 +995,7 @@ class Client(Methods):
                     raw.functions.upload.GetFile(
                         location=location, offset=offset_bytes, limit=chunk_size
                     ),
-                    sleep_threshold=30,
+                    sleep_threshold=self.sleep_threshold,
                 )
 
                 if isinstance(r, raw.types.upload.File):
@@ -1031,7 +1031,7 @@ class Client(Methods):
                             raw.functions.upload.GetFile(
                                 location=location, offset=offset_bytes, limit=chunk_size
                             ),
-                            sleep_threshold=30,
+                            sleep_threshold=self.sleep_threshold,
                         )
 
                 elif isinstance(r, raw.types.upload.FileCdnRedirect):

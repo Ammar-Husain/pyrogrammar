@@ -107,7 +107,8 @@ class SaveFile:
 
                     try:
                         await session.invoke(data)
-                    except FloodWait:
+                    except FloodWait as e:
+                        log.exception(e)
                         raise
                     except Exception as e:
                         log.exception(e)
