@@ -430,6 +430,12 @@ class Session:
                 amount = e.value
 
                 if amount > sleep_threshold >= 0:
+                    log.warning(
+                        "[self.client.name] %s tell you to wait for %s",
+                        self.client.name,
+                        query_name,
+                        amount,
+                    )
                     raise
 
                 log.warning(

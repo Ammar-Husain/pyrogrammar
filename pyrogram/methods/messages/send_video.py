@@ -252,7 +252,8 @@ class SendVideo:
                             **await utils.parse_text_entities(
                                 self, caption, parse_mode, caption_entities
                             )
-                        )
+                        ),
+                        sleep_threshold=self.sleep_threshold,
                     )
                 except FilePartMissing as e:
                     await self.save_file(video, file_id=file.id, file_part=e.value)
@@ -285,4 +286,5 @@ class SendVideo:
         except StopTransmission:
             return None
         except FloodWait:
+            print("xxx\nthe flood wait exception reaches send_video function")
             raise

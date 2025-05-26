@@ -106,13 +106,14 @@ class SaveFile:
                         return
 
                     try:
-                        await session.invoke(data, sleep_threshold=self.sleep_threshold)
+                        # await session.invoke(data, sleep_threshold=self.sleep_threshold)
+                        await session.invoke(data, sleep_threshold=0)
                     except FloodWait as e:
                         print(
-                            "xxx\n\n\nthe flood wait exception reaches save_file funcion"
+                            "xxx\n\n\nthe flood wait exception reaches save_file funcion\n\n"
                         )
                         log.exception(e)
-                        raise
+                        raise e
                     except Exception as e:
                         log.exception(e)
                         raise
