@@ -41,6 +41,7 @@ from pyrogram.errors import (
     BadRequest,
     CDNFileHashMismatch,
     ChannelPrivate,
+    FileReferenceExpired,
     FloodWait,
     SessionPasswordNeeded,
     VolumeLocNotFound,
@@ -889,6 +890,8 @@ class Client(Methods):
                 file.write(chunk)
         except FloodWait:
             raise
+        except FileReferenceExpired:
+            raise
         except BaseException as e:
             if not in_memory:
                 file.close()
@@ -1131,6 +1134,7 @@ class Client(Methods):
                 raise
             except Exception as e:
                 log.exception(e)
+                raise
             finally:
                 await session.stop()
 
