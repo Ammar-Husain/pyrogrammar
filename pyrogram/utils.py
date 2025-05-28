@@ -194,9 +194,11 @@ def unpack_inline_message_id(
         )
 
 
-MIN_CHANNEL_ID = -1002147483647
+MIN_CHANNEL_ID = -1007852516352  # new value
 MAX_CHANNEL_ID = -1000000000000
-MIN_CHAT_ID = -2147483647
+
+MIN_CHAT_ID = -999999999999  # new value
+
 MAX_USER_ID_OLD = 2147483647
 MAX_USER_ID = 999999999999
 
@@ -230,24 +232,16 @@ def get_peer_id(peer: raw.base.Peer) -> int:
 
 
 def get_peer_type(peer_id: int) -> str:
-    # if peer_id < 0:
-    #     if MIN_CHAT_ID <= peer_id:
-    #         return "chat"
-    #
-    #     if MIN_CHANNEL_ID <= peer_id < MAX_CHANNEL_ID:
-    #         return "channel"
-    # elif 0 < peer_id <= MAX_USER_ID:
-    #     return "user"
-    #
-    # raise ValueError(f"Peer id invalid: {peer_id}")
+    if peer_id < 0:
+        if MIN_CHAT_ID <= peer_id:
+            return "chat"
 
-    peer_id_str = str(peer_id)
-    if not peer_id_str.startswith("-"):
+        if MIN_CHANNEL_ID <= peer_id < MAX_CHANNEL_ID:
+            return "channel"
+    elif 0 < peer_id <= MAX_USER_ID:
         return "user"
-    elif peer_id_str.startswith("-100"):
-        return "channel"
-    else:
-        return "chat"
+
+    raise ValueError(f"Peer id invalid: {peer_id}")
 
 
 def get_channel_id(peer_id: int) -> int:
